@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="simple_blog_post" resource="default" engine="innodb" comment="Post table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="varchar" name="title" nullable="true" length="255" comment="Post Title"/>
+        <column xsi:type="text" name="text" nullable="true" comment="Post Text"/>
+        <column xsi:type="varchar" name="image" nullable="true" length="255" comment="Post Image"/>
+        <column xsi:type="boolean" name="active" comment="Boolean"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Update Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+    <table name="simple_blog_comment" resource="default" engine="innodb" comment="Comment table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="text" name="text" nullable="true" comment="Comment Text"/>
+        <column xsi:type="int" name="post_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Post ID"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="User ID"/>
+        <column xsi:type="boolean" name="active" comment="Boolean"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Update Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="SIM_BLOG_COM_POST_ID_TO_CUS_ENT_ID"
+                    table="simple_blog_comment" column="post_id" referenceTable="simple_blog_post"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="SIM_BLOG_COM_POST_ID_TO_SIM_BLOG_POST_ID"
+                    table="simple_blog_comment" column="user_id" referenceTable="customer_entity"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+    </table>
+</schema>

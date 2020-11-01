@@ -1,0 +1,33 @@
+<?php
+/**
+ * Post view template
+ *
+ * @var $block \Simple\Blog\Block\Frontend\Catalog\Comments\Comments
+ */
+?>
+<?php
+$comments = $block->getComments();
+?>
+<?php if ($comments->getItems()): ?>
+    <div>Comments:</div>
+    <div class="blog-post-item-content">
+        <?php foreach ($comments as $comment):?>
+            <?php if ($block->isUserLogedIn() && $block->getUserId() == $comment->getUserId()): ?>
+                <div>
+                    <span><a href="<?= $block->escapeUrl($block->getEditUrl($comment->getId())); ?>"><?= $block->escapeHtml(__('Edit')); ?></a></span>
+                    <span><a href="<?= $block->escapeUrl($block->getDeleteUrl($comment->getId())); ?>"><?= $block->escapeHtml(__('Delete')); ?></a></span>
+                </div>
+            <?php endif; ?>
+            <div>
+                <span><?= $block->escapeHtml($comment->getData('user_first_name')); ?> : </span>
+                <span><?= $block->escapeHtml($comment->getText()); ?></span>
+            </div>
+            <div><?= $block->escapeHtml(__('commented at: ')) ?><?= $block->escapeHtml($comment->getCreatedAt()); ?></div>
+            <div><?= $block->escapeHtml(__('updated: ')) ?><?= $block->escapeHtml($comment->getUpdatedAt()); ?></div>
+            <br>
+        <?php endforeach;?>
+    </div>
+    <div class="blog-post-toolbar toolbar bottom"><?= $block->getChildHtml('simple.blog.comment.pager'); ?></div>
+<?php else: ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('Post haven\'t comments.')); ?></span></div>
+<?php endif;?>

@@ -1,0 +1,30 @@
+<?php
+/**
+ * Post view template
+ *
+ * @var $block \Simple\Blog\Block\Frontend\Catalog\PostView
+ */
+?>
+<?php
+$post = $block->getPost();
+?>
+<?php if ($post): ?>
+    <div class="post-header">
+        <h1 class="blog-post-item-title"><?= $block->escapeHtml($post->getTitle()); ?></h1>
+
+        <img src="<?= $block->escapeUrl($block->getImageUrl()); ?>" />
+    </div>
+    <div class="blog-post-item-meta">
+        <strong><?= $block->escapeHtml(__('Created at:')); ?></strong> <?= $block->escapeHtml($post->getCreatedAt()); ?>
+        <strong><?= $block->escapeHtml(__('Update at:')); ?></strong> <?= $block->escapeHtml($post->getUpdateAt()); ?>
+    </div>
+    <div class="blog-post-item-content">
+        <?= $block->escapeHtml($post->getText()); ?>
+    </div>
+    <div>
+        <?= $block->getChildHtml('simple.blog.comments.list'); ?>
+    </div>
+    <div>
+        <?= $block->getChildHtml('simple.blog.comments.create'); ?>
+    </div>
+<?php endif;?>

@@ -1,0 +1,39 @@
+<?php
+/**
+ * Catalog list template
+ *
+ * @var $block \Simple\Blog\Block\Frontend\Catalog\PostList
+ */
+?>
+<?php
+$posts = $block->getPosts();
+?>
+<div>
+    <h3>
+        <?= $block->escapeHtml(__($block->getPageHeader())); ?>
+    </h3>
+    <?php if ($posts->getItems()): ?>
+        <div class="blog-post-list">
+            <?php foreach ($posts as $post) : ?>
+                <div class="blog-post-list-item">
+                    <div class="post-title">
+                        <h3 class="blog-post-item-title">
+                            <a href="<?= $block->getUrl($block->getPostViewUrl($post->getId())); ?>"><?= $block->escapeHtml(__($post->getTitle())); ?></a>
+                        </h3>
+                        <img src="<?= $block->getImage(); ?>"/>
+                    </div>
+                    <div class="blog-post-item-content">
+                        <div class="blog-post-item-meta">
+                            <strong><?= $block->escapeHtml(__('Created at:')); ?></strong> <?= $block->escapeHtml($post->getCreatedAt()); ?>
+                            <strong><?= $block->escapeHtml(__('Update at:')); ?></strong> <?= $block->escapeHtml($post->getUpdateAt()); ?>
+                        </div>
+                        <strong><?= $block->escapeHtml($block->getCommentsCount($post->getId())); ?></strong><?= $block->escapeHtml(__(' Comments')); ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            <div class="blog-post-toolbar toolbar bottom"><?= $block->getChildHtml('simple.blog.posts.pager'); ?></div>
+        </div>
+    <?php else : ?>
+        <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('Blog haven\'t posts.'); ?></span></div>
+    <?php endif; ?>
+</div>

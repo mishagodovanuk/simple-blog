@@ -1,0 +1,32 @@
+{
+    "simple_blog_post": {
+        "column": {
+            "entity_id": true,
+            "title": true,
+            "text": true,
+            "image": true,
+            "active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "simple_blog_comment": {
+        "column": {
+            "entity_id": true,
+            "text": true,
+            "post_id": true,
+            "user_id": true,
+            "active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SIMPLE_BLOG_COMMENT_POST_ID_SIMPLE_BLOG_POST_ENTITY_ID": true,
+            "SIMPLE_BLOG_COMMENT_USER_ID_CUSTOMER_ENTITY_ENTITY_ID": true
+        }
+    }
+}

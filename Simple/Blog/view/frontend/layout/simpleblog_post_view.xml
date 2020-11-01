@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Simple\Blog\Block\Frontend\Catalog\PostView" name="simple.blog.post.view" template="Simple_Blog::catalog/post/view.phtml" >
+                <block class="Simple\Blog\Block\Frontend\Catalog\Comments\Comments" name="simple.blog.comments.create" template="Simple_Blog::catalog/post/comments/create.phtml" />
+                <block class="Simple\Blog\Block\Frontend\Catalog\Comments\Comments" name="simple.blog.comments.list" template="Simple_Blog::catalog/post/comments/list.phtml" >
+                    <block class="Magento\Theme\Block\Html\Pager" name="simple.blog.comment.pager" />
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

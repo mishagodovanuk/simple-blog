@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Simple\Blog\Api\Data\PostInterface" type="Simple\Blog\Model\Post" />
+    <preference for="Simple\Blog\Api\Data\PostSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Simple\Blog\Api\PostRepositoryInterface" type="Simple\Blog\Model\PostRepository" />
+    <preference for="Simple\Blog\Api\Data\CommentInterface" type="Simple\Blog\Model\Comment" />
+    <preference for="Simple\Blog\Api\Data\CommentSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Simple\Blog\Api\CommentRepositoryInterface" type="Simple\Blog\Model\CommentRepository" />
+</config>

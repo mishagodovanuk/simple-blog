@@ -1,0 +1,50 @@
+<?php
+/**
+ * Post view template
+ *
+ * @var $block \Simple\Blog\Block\Frontend\Catalog\Comments\Comments
+ */
+?>
+<?php
+$editedComment = $block->getEditComment();
+?>
+<?php if ($block->isUserLogedIn()): ?>
+<form class="form contact"
+      action="<?= $block->escapeUrl($block->getCreateCommentAction()) ?>"
+      id="contact-form"
+      method="post"
+      data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+      data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Leave your comment')) ?></span></legend><br />
+        <div class="field note no-label"><?= $block->escapeHtml(__('Just leave your comments and admin will answer to you')) ?></div>
+        <div class="field comment required">
+            <label class="label" for="comment"><span><?= $block->escapeHtml(__('What’s on your mind?')) ?></span></label>
+            <div class="control">
+                <textarea name="text" id="text" title="<?= $block->escapeHtmlAttr(__('What’s on your mind?')) ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}">
+                    <?php if ($editedComment): ?>
+                        <?= $editedComment->getText()?>
+                    <?php endif;?>
+                </textarea>
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <?php if ($editedComment): ?>
+                <input type="hidden" name="entity_id" id="entity_id" value="<?= $block->escapeHtml($editedComment->getId()); ?>" />
+            <?php endif;?>
+            <input type="hidden" name="post_id" id="post_id" value="<?= $block->escapeHtml($block->getPostId()); ?>" />
+            <input type="hidden" name="user_id" id="user_id" value="<?= $block->escapeHtml($block->getUserId()); ?>" />
+            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Submit')) ?>" class="action submit primary">
+                <span><?= /* @escapeNotVerified */ $block->escapeHtml(__('Submit')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<?php else: ?>
+    <div class="message info empty">
+        <span><?= $block->escapeHtml(__('Only logined users can leave comments.')); ?></span>
+        <a href="<?= $block->escapeUrl($block->getLoginUrl()); ?>"><?= $block->escapeHtml(__('Login')); ?></a>
+    </div>
+<?php endif; ?>

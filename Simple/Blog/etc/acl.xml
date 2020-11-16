@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Simple_Blog::blog_core" title="Blog Core">
+                    <resource id="Simple_Blog::posts" title="Blog Post" translate="title" sortOrder="10">
+                        <resource id="Simple_Blog::posts_save" title="Save Post" translate="title" sortOrder="10" />
+                        <resource id="Simple_Blog::posts_delete" title="Delete Post" translate="title" sortOrder="20" />
+                    </resource>
+                    <resource id="Simple_Blog::comments" title="Blog Comments" translate="title" sortOrder="10">
+                        <resource id="Simple_Blog::comments_save" title="Save Comments" translate="title" sortOrder="10" />
+                        <resource id="Simple_Blog::comments_delete" title="Delete Comments" translate="title" sortOrder="20" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

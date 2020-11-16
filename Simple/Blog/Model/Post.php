@@ -197,4 +197,9 @@ class Post extends AbstractModel implements IdentityInterface, PostInterface
     {
         return $this->getData(self::UPDATED_AT);
     }
+
+    public function getActiveStatuses(): array
+    {
+        return [1 => 'Active', 0 => 'Inactive'];
+    }
 }

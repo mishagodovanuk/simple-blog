@@ -1,0 +1,116 @@
+
+<?xml version="1.0"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">simple_blog_post_edit.simple_blog_post_edit_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Post Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="Hodovanuk\Blog\Block\Adminhtml\Post\Form\SaveButton"/>
+            <button name="delete" class="Hodovanuk\Blog\Block\Adminhtml\Post\Form\DeleteButton"/>
+            <button name="back" class="Hodovanuk\Blog\Block\Adminhtml\Post\Form\BackButton"/>
+        </buttons>
+        <namespace>simple_blog_post_edit</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>hodovanuk_blog_post_form.form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="post_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="simple_blog/posts/save"/>
+        </settings>
+        <dataProvider class="Hodovanuk\Blog\Model\Post\DataProvider" name="form_data_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label/>
+        </settings>
+        <field name="title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">post</item>
+                    <item name="sortOrder" xsi:type="string">10</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="dataScope" xsi:type="string">title</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="active">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">post</item>
+                    <item name="sortOrder" xsi:type="string">20</item>
+                    <item name="default" xsi:type="number">1</item>
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Is active</item>
+                    <item name="dataScope" xsi:type="string">active</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="false" xsi:type="string">0</item>
+                        <item name="true" xsi:type="string">1</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="source" xsi:type="string">post</item>
+                    <item name="label" xsi:type="string" translate="true">Image</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="componentType" xsi:type="string">fileUploader</item>
+                    <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="dataScope" xsi:type="string">image</item>
+                    <item name="sortOrder" xsi:type="string">30</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="simple_blog/posts/upload"/>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="text">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">post</item>
+                    <item name="sortOrder" xsi:type="string">50</item>
+                    <item name="formElement" xsi:type="string">wysiwyg</item>
+                    <item name="wysiwyg" xsi:type="boolean">true</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide</item>
+                    <item name="dataType" xsi:type="string">textarea</item>
+                    <item name="dataScope" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Content</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

@@ -113,11 +113,11 @@ class Post extends AbstractModel implements IdentityInterface, PostInterface
     /**
      * Set image.
      *
-     * @param string $image
+     * @param string|array $image
      *
      * @return mixed|\Simple\Blog\Model\Post
      */
-    public function setImage(string $image)
+    public function setImage($image)
     {
         return $this->setData(self::IMAGE, $image);
     }
@@ -125,9 +125,9 @@ class Post extends AbstractModel implements IdentityInterface, PostInterface
     /**
      * Get image.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImage(): string
+    public function getImage()
     {
         return $this->getData(self::IMAGE);
     }

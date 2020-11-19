@@ -1,25 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Simple\Blog\Model\ResourceModel\Post\Grid;
 
-use Simple\Blog\Model\ResourceModel\Post;
-use Simple\Blog\Model\ResourceModel\Post\Collection as PostCollection;
 use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Document;
+use Simple\Blog\Model\ResourceModel\Post;
+use Simple\Blog\Model\ResourceModel\Post\Collection as PostCollection;
 
+/**
+ * Class Collection
+ *
+ * @package Simple\Blog\Model\ResourceModel\Post\Grid
+ */
 class Collection extends PostCollection implements SearchResultInterface
 {
     /**
-     * Aggregations
+     * Aggregations.
      *
      * @var AggregationInterface
      */
     private $aggregations;
 
     /**
-     * Collection constructor
+     * Collection constructor.
      *
      * @return void
      */
@@ -29,39 +36,41 @@ class Collection extends PostCollection implements SearchResultInterface
     }
 
     /**
-     * Get aggregations
+     * Get aggregations.
      *
      * @return AggregationInterface
      */
-    public function getAggregations()
+    public function getAggregations(): AggregationInterface
     {
         return $this->aggregations;
     }
 
     /**
-     * Set aggregations
+     * Set aggregations.
      *
      * @param AggregationInterface $aggregations
      *
      * @return void
      */
-    public function setAggregations($aggregations)
+    public function setAggregations($aggregations): void
     {
+        //TODO Fix this.
         $this->aggregations = $aggregations;
     }
 
     /**
-     * Get search criteria
+     * Get search criteria.
      *
      * @return \Magento\Framework\Api\SearchCriteriaInterface|null
      */
     public function getSearchCriteria()
     {
+        //TODO Fix this.
         return null;
     }
 
     /**
-     * Set search criteria
+     * Set search criteria.
      *
      * @param \Magento\Framework\Api\SearchCriteriaInterface|null $searchCriteria
      *
@@ -69,23 +78,23 @@ class Collection extends PostCollection implements SearchResultInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null): Collection
     {
         return $this;
     }
 
     /**
-     * Get total count
+     * Get total count.
      *
      * @return int
      */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
-        return $this->getSize();
+        return (int)$this->getSize();
     }
 
     /**
-     * Set total count
+     * Set total count.
      *
      * @param int $totalCount
      *
@@ -93,13 +102,13 @@ class Collection extends PostCollection implements SearchResultInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setTotalCount($totalCount)
+    public function setTotalCount($totalCount): Collection
     {
         return $this;
     }
 
     /**
-     * Set items list
+     * Set items list.
      *
      * @param \Magento\Framework\Api\ExtensibleDataInterface[] $items
      *
@@ -107,7 +116,7 @@ class Collection extends PostCollection implements SearchResultInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setItems(array $items = null)
+    public function setItems(array $items = null): Collection
     {
         return $this;
     }

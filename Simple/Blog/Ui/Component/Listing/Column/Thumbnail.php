@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Simple\Blog\Ui\Component\Listing\Column;
 
 use Magento\Catalog\Helper\Image;
@@ -9,8 +11,16 @@ use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Ui\Component\Listing\Columns\Column;
 
+/**
+ * Class Thumbnail
+ *
+ * @package Simple\Blog\Ui\Component\Listing\Column
+ */
 class Thumbnail extends Column
 {
+    /**
+     * Alt image field.
+     */
     const ALT_FIELD = 'title';
 
     /**
@@ -71,7 +81,7 @@ class Thumbnail extends Column
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function prepareDataSource(array $dataSource)
+    public function prepareDataSource(array $dataSource): array
     {
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
@@ -85,7 +95,7 @@ class Thumbnail extends Column
                 $item[$fieldName . '_src'] = $url;
                 $item[$fieldName . '_alt'] = $this->getAlt($item) ?: '';
                 $item[$fieldName . '_link'] = $this->urlBuilder->getUrl(
-                    'hodovanuk_blog/post/form',
+                    'smile_blog/post/form',
                     ['id' => $item['entity_id']]
                 );
                 $item[$fieldName . '_orig_src'] = $url;

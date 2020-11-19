@@ -1,20 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace Simple\Blog\Model\Post;
 
+use Magento\Framework\App\RequestInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
-use Magento\Store\Model\StoreManagerInterface;
-use Magento\Backend\Model\UrlInterface;
-use Simple\Blog\Model\ResourceModel\Post\CollectionFactory;
-use Simple\Helper\Data as DataHelper;
+use Simple\Blog\Helper\Data as DataHelper;
 
+/**
+ * Class DataProvider
+ *
+ * @package Simple\Blog\Model\Post
+ */
 class DataProvider extends AbstractDataProvider
 {
-    /**
-     * @var
-     */
-    protected $collection;
-
     /**
      * Loaded data
      *
@@ -23,27 +22,41 @@ class DataProvider extends AbstractDataProvider
     private $loadedData;
 
     /**
-     * Store manager
+     * Data helper.
      *
-     * @var StoreManagerInterface
+     * @var \Simple\Blog\Helper\Data
      */
-    protected $storeManager;
-
     protected $dataHelper;
 
+    /**
+     * Request interface.
+     *
+     * @var \Magento\Framework\App\RequestInterface
+     */
+    protected $request;
+
+    /**
+     * DataProvider constructor.
+     *
+     * @param                                         $name
+     * @param                                         $primaryFieldName
+     * @param                                         $requestFieldName
+     * @param \Simple\Blog\Helper\Data                $dataHelper
+     * @param \Magento\Framework\App\RequestInterface $request
+     * @param array                                   $meta
+     * @param array                                   $data
+     */
     public function __construct(
         $name,
         $primaryFieldName,
         $requestFieldName,
-        CollectionFactory $PostCollectionFactory,
-        StoreManagerInterface $storeManager,
         DataHelper $dataHelper,
+        RequestInterface $request,
         array $meta = [],
         array $data = []
     ) {
-        $this->collection = $PostCollectionFactory->create();
-        $this->storeManager = $storeManager;
         $this->dataHelper = $dataHelper;
+        $this->request = $request;
         parent::__construct(
             $name,
             $primaryFieldName,
@@ -54,36 +67,26 @@ class DataProvider extends AbstractDataProvider
     }
 
     /**
-     * Get data
+     * Get data.
      *
      * @return array
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getData()
+    public function getData(): array
     {
         if (isset($this->loadedData)) {
             return $this->loadedData;
         }
-
-        $items = $this->collection->getItems();
-        foreach ($items as $post) {
-            $mediaUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
-            $url = $mediaUrl . $post->getImage();
-            $image[] = [
-                'url'  => $url,
-                'file' => basename($post->getImage())
-            ];
-            $post->setImage($image);
-
-            $this->loadedData[$post->getId()] = $post->getData();
-        }
-
-        $data = $this->dataHelper->getAdminEditProduct()
+        //TODO Replace request by context or create simular function in datahelper.
+        $data = $this->dataHelper->getAdminEditProduct($this->request->getParam('id'));
         if (!empty($data)) {
-            $post = $this->collection->getNewEmptyItem();
-            $post->setData($data);
+            $post = $data;
+            if ($post->getImage()) {
+                $image = [];
+                $image[0]['name'] = basename($post->getImage());
+                $image[0]['url'] = $post->getImage();
+                $post->setImage($image);
+            }
             $this->loadedData[$post->getId()] = $post->getData();
-            $this->dataPersistor->clear('hodovanuk_blog_post');
         }
 
         return $this->loadedData;

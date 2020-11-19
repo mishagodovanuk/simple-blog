@@ -1,11 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Simple\Blog\Controller\Adminhtml\Posts;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
+use Magento\Backend\Model\View\Result\Page;
 
+/**
+ * Class Index
+ *
+ * @package Simple\Blog\Controller\Adminhtml\Posts
+ */
 class Index extends Action
 {
     /**
@@ -37,7 +45,7 @@ class Index extends Action
      *
      * @return \Magento\Backend\Model\View\Result\Page
      */
-    public function execute()
+    public function execute(): Page
     {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();

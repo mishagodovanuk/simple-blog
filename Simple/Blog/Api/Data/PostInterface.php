@@ -77,16 +77,16 @@ interface PostInterface
     /**
      * Set image.
      *
-     * @param string $image
+     * @param string|array $image
      *
      * @return mixed
      */
-    public function setImage(string $image);
+    public function setImage($image);
 
     /**
      * Get image.
      *
-     * @return string
+     * @return string|null
      */
     public function getImage();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Simple\Blog\Model\ResourceModel\Comment;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
@@ -26,7 +28,7 @@ class Collection extends AbstractCollection
      *
      * @return $this|\Simple\Blog\Model\ResourceModel\Comment\Collection|void
      */
-    protected function _initSelect()
+    protected function _initSelect(): Collection
     {
         parent::_initSelect();
 

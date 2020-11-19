@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Simple\Blog\Model;
 
 use Magento\Framework\Api\SearchCriteriaInterface;

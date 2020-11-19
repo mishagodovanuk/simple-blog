@@ -40,7 +40,7 @@ class Comment extends AbstractModel implements IdentityInterface, CommentInterfa
      *
      * @return string[]
      */
-    public function getIdentities()
+    public function getIdentities(): array
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }

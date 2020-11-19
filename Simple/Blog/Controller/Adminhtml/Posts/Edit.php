@@ -10,7 +10,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Result\PageFactory;
 use Simple\Blog\Model\PostRepository;
 use Psr\Log\LoggerInterface as Logger;
-use Simple\Helper\Data as BlogDataHelper;
+use Simple\Blog\Helper\Data as BlogDataHelper;
 use Magento\Framework\View\Result\Page;
 
 /**
@@ -51,7 +51,7 @@ class Edit extends Action
     /**
      * Blog data helper.
      *
-     * @var \Simple\Helper\Data
+     * @var \Simple\Blog\Helper\Data
      */
     protected $blogDataHelper;
 
@@ -62,7 +62,7 @@ class Edit extends Action
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Simple\Blog\Model\PostRepository          $postRepository
      * @param \Psr\Log\LoggerInterface                   $logger
-     * @param \Simple\Helper\Data                        $blogDataHelper
+     * @param \Simple\Blog\Helper\Data                        $blogDataHelper
      */
     public function __construct(
         Context $context,
@@ -79,6 +79,8 @@ class Edit extends Action
     }
 
     /**
+     * Init action.
+     *
      * @return Page
      */
     protected function _initAction(): Page
@@ -113,6 +115,8 @@ class Edit extends Action
             } catch (NoSuchEntityException $e) {
                 $this->messageManager->addErrorMessage(__('Post was not deleted. No such post.'));
                 $result = $this->resultRedirectFactory->create()->setPath($this->_redirect->getRefererUrl());
+
+                return $result;
             }
             $this->blogDataHelper->setAdminEditProduct($post);
         }

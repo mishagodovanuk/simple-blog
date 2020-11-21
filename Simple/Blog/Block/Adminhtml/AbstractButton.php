@@ -35,7 +35,7 @@ class AbstractButton
      *
      * @return string
      */
-    public function getPostId(): string
+    public function getPostId(): ?string
     {
         return $this->context->getRequest()->getParam('id');
     }

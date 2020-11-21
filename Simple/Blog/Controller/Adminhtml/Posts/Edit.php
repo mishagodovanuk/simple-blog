@@ -7,11 +7,11 @@ namespace Simple\Blog\Controller\Adminhtml\Posts;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
-use Simple\Blog\Model\PostRepository;
 use Psr\Log\LoggerInterface as Logger;
 use Simple\Blog\Helper\Data as BlogDataHelper;
-use Magento\Framework\View\Result\Page;
+use Simple\Blog\Model\PostRepository;
 
 /**
  * Class Edit
@@ -103,7 +103,6 @@ class Edit extends Action
      */
     public function execute()
     {
-
         $id = $this->getRequest()->getParam('id');
         $result = $this->_initAction();
 
@@ -113,7 +112,7 @@ class Edit extends Action
                 $result->getConfig()->getTitle()->prepend(__('Edit "%1"', $post->getTitle()));
                 $result->addBreadcrumb(__('Edit Post'), __('Edit Post'));
             } catch (NoSuchEntityException $e) {
-                $this->messageManager->addErrorMessage(__('Post was not deleted. No such post.'));
+                $this->messageManager->addErrorMessage(__('Post was not edited. No such post.'));
                 $result = $this->resultRedirectFactory->create()->setPath($this->_redirect->getRefererUrl());
 
                 return $result;

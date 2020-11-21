@@ -40,7 +40,7 @@ class Collection extends PostCollection implements SearchResultInterface
      *
      * @return AggregationInterface
      */
-    public function getAggregations(): AggregationInterface
+    public function getAggregations()
     {
         return $this->aggregations;
     }
@@ -88,9 +88,9 @@ class Collection extends PostCollection implements SearchResultInterface
      *
      * @return int
      */
-    public function getTotalCount(): int
+    public function getTotalCount()
     {
-        return (int)$this->getSize();
+        return $this->getSize();
     }
 
     /**

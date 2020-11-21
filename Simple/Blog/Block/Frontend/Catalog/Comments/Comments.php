@@ -2,13 +2,15 @@
 
 namespace Simple\Blog\Block\Frontend\Catalog\Comments;
 
-use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Customer\Model\Url as CustomerUrl;
 use Magento\Framework\View\Element\Template;
 use Simple\Blog\Api\Data\CommentInterface;
 use Simple\Blog\Model\ResourceModel\Comment\Collection as CommentCollection;
 use Simple\Blog\Model\ResourceModel\Comment\CollectionFactory as CommentCollectionFactory;
 use Simple\Blog\Model\CommentRepository;
+use Magento\Customer\Model\Customer;
+use Magento\Framework\App\Http\Context as HttpContext;
+use Magento\Customer\Model\Context as CustomerContext;
 
 /**
  * Class Comments
@@ -27,7 +29,7 @@ class Comments extends Template
     /**
      * Comments.
      *
-     * @var
+     * @var \Simple\Blog\Model\ResourceModel\Comment\Collection
      */
     protected $comments;
 
@@ -39,13 +41,6 @@ class Comments extends Template
     protected $commentRepository;
 
     /**
-     * Customer session.
-     *
-     * @var \Magento\Customer\Model\Session
-     */
-    protected $customerSession;
-
-    /**
      * Customer url.
      *
      * @var \Magento\Customer\Model\Url
@@ -53,27 +48,34 @@ class Comments extends Template
     protected $customerUrl;
 
     /**
+     * Http context.
+     *
+     * @var \Magento\Framework\App\Http\Context
+     */
+    protected $httpContext;
+
+    /**
      * Comments constructor.
      *
      * @param \Magento\Framework\View\Element\Template\Context           $context
      * @param \Simple\Blog\Model\ResourceModel\Comment\CollectionFactory $commentsCollection
-     * @param \Magento\Customer\Model\Session                            $customerSession
      * @param \Magento\Customer\Model\Url                                $customerUrl
      * @param \Simple\Blog\Model\CommentRepository                       $commentRepository
+     * @param \Magento\Framework\App\Http\Context                        $httpContext
      * @param array                                                      $data
      */
     public function __construct(
         Template\Context $context,
         CommentCollectionFactory $commentsCollection,
-        CustomerSession $customerSession,
         CustomerUrl $customerUrl,
         CommentRepository $commentRepository,
+        HttpContext $httpContext,
         array $data = []
     ) {
         $this->commentsCollection = $commentsCollection;
         $this->commentRepository = $commentRepository;
-        $this->customerSession = $customerSession;
         $this->customerUrl = $customerUrl;
+        $this->httpContext = $httpContext;
         parent::__construct($context, $data);
     }
 
@@ -82,7 +84,7 @@ class Comments extends Template
      *
      * @return $this|\Simple\Blog\Block\Frontend\Catalog\Comments\Comments
      */
-    protected function _prepareLayout()
+    protected function _prepareLayout(): Comments
     {
         parent::_prepareLayout();
 
@@ -121,7 +123,7 @@ class Comments extends Template
      *
      * @return \Simple\Blog\Model\ResourceModel\Comment\Collection
      */
-    public function getComments()
+    public function getComments(): CommentCollection
     {
         if ($this->comments == null) {
             $this->comments = $this->commentsCollection->create()
@@ -130,16 +132,6 @@ class Comments extends Template
         }
 
         return $this->comments;
-    }
-
-    /**
-     * Is user loged in.
-     *
-     * @return bool
-     */
-    public function isUserLogedIn(): bool
-    {
-        return (bool)$this->customerSession->isLoggedIn();
     }
 
     /**
@@ -163,23 +155,13 @@ class Comments extends Template
     }
 
     /**
-     * Get user id.
-     *
-     * @return string
-     */
-    public function getUserId(): string
-    {
-        return $this->customerSession->getCustomerId();
-    }
-
-    /**
      * Get edit url.
      *
-     * @param $id
+     * @param string $id
      *
      * @return string
      */
-    public function getEditUrl($id): string
+    public function getEditUrl(string $id): string
     {
         return $this->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true, 'edit_id' => $id]);
     }
@@ -187,11 +169,11 @@ class Comments extends Template
     /**
      * Get delete url.
      *
-     * @param $id
+     * @param string $id
      *
      * @return string
      */
-    public function getDeleteUrl($id): string
+    public function getDeleteUrl(string $id): string
     {
         return $this->getUrl('simpleblog/comment/delete', ['id' => $id]);
     }
@@ -214,5 +196,40 @@ class Comments extends Template
         }
 
         return $result;
+    }
+
+    /**
+     * Get customer.
+     *
+     * @return \Magento\Customer\Model\Customer|null
+     */
+    protected function getCustomer(): ?Customer
+    {
+        return $this->getData('simple_blog_customer');
+    }
+
+    /**
+     * Get user id.
+     *
+     * @return string|null
+     */
+    public function getUserId(): ?string
+    {
+        $result = null;
+        if ($this->getCustomer()) {
+            $result = $this->getCustomer()->getId();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Is user loged in.
+     *
+     * @return bool|null
+     */
+    public function isUserLogedIn(): ?bool
+    {
+        return $this->httpContext->getValue(CustomerContext::CONTEXT_AUTH);
     }
 }

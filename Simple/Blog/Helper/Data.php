@@ -50,14 +50,18 @@ class Data extends AbstractHelper
     /**
      * Get admin edit product.
      *
-     * @param string $id
+     * @param string|null $id
      *
      * @return \Simple\Blog\Model\Post
      */
-    public function getAdminEditProduct(string $id):  Post
+    public function getAdminEditProduct(string $id = null):  ?Post
     {
-        $result = $this->dataPersistor->get(Config::ADMIN_POST_PERSISTOR . $id);
-        $this->dataPersistor->clear(Config::ADMIN_POST_PERSISTOR . $id);
+        $result = null;
+
+        if ($id) {
+            $result = $this->dataPersistor->get(Config::ADMIN_POST_PERSISTOR . $id);
+            $this->dataPersistor->clear(Config::ADMIN_POST_PERSISTOR . $id);
+        }
 
         return $result;
     }

@@ -38,6 +38,12 @@ class Delete extends AbstractButton implements ButtonProviderInterface
      */
     public function getDeleteUrl(): string
     {
-        return $this->getUrl('*/*/delete', ['id' => $this->getPostId()]);
+        $params = [];
+
+        if ($this->getPostId()) {
+            $params = ['id' => $this->getPostId()];
+        }
+
+        return $this->getUrl('*/*/delete', $params);
     }
 }
